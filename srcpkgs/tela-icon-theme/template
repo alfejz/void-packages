@@ -1,0 +1,39 @@
+# Template file for 'tela-icon-theme'
+pkgname=tela-icon-theme
+_yy=2023
+_mm=06
+_dd=25
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=fetch
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache"
+makedepends=""
+depends=""
+short_desc="A flat and colorful icon theme by vinceliuice"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Tela-icon-theme"
+changelog="https://github.com/vinceliuice/Tela-icon-theme/releases"
+distfiles="https://github.com/vinceliuice/Tela-icon-theme/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=74cf173ce079dbec4ae7af628ebb33d0d32e953b0e1d1a6fd56641a228853f09
+
+nostrip=yes
+nodebug=yes
+noverifyrdeps=yes
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "Tela-icon-theme-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/icons 755
+    ${wrksrc}/install.sh -a -d "${DESTDIR}/usr/share/icons"
+}
