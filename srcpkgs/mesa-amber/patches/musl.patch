@@ -1,0 +1,43 @@
+diff -Naur a/src/amd/vulkan/winsys/amdgpu/radv_amdgpu_winsys.h b/src/amd/vulkan/winsys/amdgpu/radv_amdgpu_winsys.h
+--- a/src/amd/vulkan/winsys/amdgpu/radv_amdgpu_winsys.h	2022-06-08 13:13:35.000000000 -0500
++++ b/src/amd/vulkan/winsys/amdgpu/radv_amdgpu_winsys.h	2023-07-13 18:33:09.911740703 -0600
+@@ -30,6 +30,7 @@
+ 
+ #include <amdgpu.h>
+ #include <pthread.h>
++#include <sys/types.h>
+ #include "util/list.h"
+ #include "util/rwlock.h"
+ #include "ac_gpu_info.h"
+diff -Naur a/src/gallium/frontends/nine/nine_debug.c b/src/gallium/frontends/nine/nine_debug.c
+--- a/src/gallium/frontends/nine/nine_debug.c	2022-06-08 13:13:35.000000000 -0500
++++ b/src/gallium/frontends/nine/nine_debug.c	2023-07-13 18:35:54.870747244 -0600
+@@ -65,7 +65,7 @@
+ {
+     static boolean first = TRUE;
+     static unsigned long dbg_flags = DBG_ERROR | DBG_WARN;
+-    unsigned long tid = 0;
++    pthread_t tid = 0;
+ 
+     if (first) {
+         first = FALSE;
+@@ -74,7 +74,7 @@
+ 
+ #if defined(HAVE_PTHREAD)
+     if (dbg_flags & DBG_TID)
+-        tid = (unsigned long)pthread_self();
++        tid = pthread_self();
+ #endif
+ 
+     if (dbg_flags & flag) {
+diff -Naur a/src/util/rand_xor.c b/src/util/rand_xor.c
+--- a/src/util/rand_xor.c	2022-06-08 13:13:35.000000000 -0500
++++ b/src/util/rand_xor.c	2023-07-13 18:32:07.959738246 -0600
+@@ -28,6 +28,7 @@
+ #if defined(HAVE_GETRANDOM)
+ #include <sys/random.h>
+ #endif
++#include <sys/types.h>
+ #include <unistd.h>
+ #include <fcntl.h>
+ #endif

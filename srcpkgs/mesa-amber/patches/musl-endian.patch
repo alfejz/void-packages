@@ -1,0 +1,21 @@
+diff -Naur a/src/util/u_endian.h b/src/util/u_endian.h
+--- a/src/util/u_endian.h	2022-06-08 13:13:35.000000000 -0500
++++ b/src/util/u_endian.h	2023-07-13 18:29:37.479732279 -0600
+@@ -87,6 +87,17 @@
+ #define UTIL_ARCH_LITTLE_ENDIAN 1
+ #define UTIL_ARCH_BIG_ENDIAN 0
+ 
++#else
++/* Musl libc */
++#include <endian.h>
++
++#if _BYTE_ORDER == LITTLE_ENDIAN
++# define UTIL_ARCH_LITTLE_ENDIAN 1
++# define UTIL_ARCH_BIG_ENDIAN 0
++#elif _BYTE_ORDER == BIG_ENDIAN
++# define UTIL_ARCH_LITTLE_ENDIAN 0
++# define UTIL_ARCH_BIG_ENDIAN 1
++#endif
+ #endif
+ 
+ #if !defined(UTIL_ARCH_LITTLE_ENDIAN) || !defined(UTIL_ARCH_BIG_ENDIAN)
