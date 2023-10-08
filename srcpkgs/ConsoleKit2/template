@@ -1,0 +1,59 @@
+# Template file for 'ConsoleKit2'
+pkgname=ConsoleKit2
+version=1.2.6
+revision=1
+build_style=gnu-configure
+configure_args="ac_cv_file__sys_class_tty_tty0_active=yes
+ --with-rundir=/run --enable-udev-acl --enable-pam-module
+ --with-pam-module-dir=/usr/lib/security --enable-libdrm
+ --enable-libcgmanager --enable-libevdev --enable-docbook-docs"
+hostmakedepends="git autoconf automake libtool pkg-config gettext-devel glib-devel xmlto
+ docbook-xsl"
+makedepends="acl-devel eudev-libudev-devel libevdev-devel polkit-devel glib-devel
+ libdrm-devel libX11-devel pam-devel libnih-devel libcgmanager-devel libxslt-devel
+ zlib-devel"
+checkdepends="libxml2" # for xmllint
+depends="dbus libevdev cgmanager"
+short_desc="A framework for defining and tracking users, login sessions, and seats"
+maintainer="Orphaned <orphan@voidlinux.org>"
+homepage="http://consolekit2.github.io/ConsoleKit2/"
+license="GPL-2"
+distfiles="https://github.com/ConsoleKit2/ConsoleKit2/archive/refs/tags/${version}.tar.gz"
+checksum=d41224129c5a689469ebd8fe87e34c4a76afdb7b2f6201eb246320262ea5a942
+
+make_dirs="
+ /etc/ConsoleKit/run-seat.d 0755 root root
+ /etc/ConsoleKit/run-session.d 0755 root root
+ /usr/lib/ConsoleKit/run-session.d 0755 root root
+ /usr/lib/ConsoleKit/run-seat.d 0755 root root"
+
+pre_configure() {
+	# remove gtk-doc documentation generation
+	rm -f ${wrksrc}/gtk-doc.make
+        cat > ${wrksrc}/gtk-doc.make <<EOF
+EXTRA_DIST =
+CLEANFILES =
+EOF
+	autoreconf -fi
+}
+
+post_install() {
+	vsv consolekit
+}
+
+libconsolekit2_package() {
+	short_desc+=" - shared libraries"
+	pkg_install() {
+		vmove usr/lib/*.so.*
+	}
+}
+
+ConsoleKit2-devel_package() {
+	short_desc+=" - development files"
+	depends="dbus-devel ${sourcepkg}>=${version}_${revision}"
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/*.so
+		vmove usr/lib/pkgconfig
+	}
+}
