@@ -4274,3 +4274,5 @@ libunicode_ucd.so.0.4 libunicode-0.4.0_1
 libunicode_loader.so.0.4 libunicode-0.4.0_1
 force-stage.so.0.1 void-force-stage-0.1_1
 libcgmanager.so.0 libcgmanager-0.42_1
+libck-connector.so.0 libconsolekit2-1.2.5_1
+libconsolekit.so.1 libconsolekit2-1.2.5_1
