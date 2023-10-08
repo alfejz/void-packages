@@ -1,0 +1,53 @@
+# Template file for 'polkit-consolekit'
+_pkgbase=polkit
+pkgname=${_pkgbase}-consolekit
+version=121
+revision=1
+wrksrc="${_pkgbase}-v.${version}"
+build_style=meson
+build_helper=gir
+configure_args="$(vopt_bool gir introspection) -Dman=true -Dsession_tracking=ConsoleKit"
+make_dirs="
+ /etc/polkit-1/rules.d 0700 polkitd polkitd
+ /usr/share/polkit-1/rules.d 0700 polkitd polkitd"
+hostmakedepends="pkg-config gettext glib-devel perl
+ libxslt docbook-xsl"
+makedepends="libglib-devel duktape-devel pam-devel"
+checkdepends="python3-dbus python3-dbusmock"
+short_desc="Polkit Authorization Toolkit for Consolekit"
+maintainer="Orphaned <orphan@voidlinux.org>"
+license="GPL-2.0-or-later"
+homepage="https://www.freedesktop.org/wiki/Software/polkit"
+changelog="https://gitlab.freedesktop.org/polkit/polkit/-/raw/master/NEWS"
+distfiles="https://gitlab.freedesktop.org/${_pkgbase}/${_pkgbase}/-/archive/${version}/${_pkgbase}-${version}.tar.gz"
+checksum=7cfe4d267f35c88f8d51e9501abe454cd0814b464824487730e8fcff03dac9fb
+system_accounts="polkitd"
+conflicts="polkit>=0 polkit-elogind>=0"
+replaces="polkit>=0 polkit-elogind>=0"
+provides="polkit-${version}_${revision}"
+
+# Package build options
+build_options="gir"
+build_options_default="gir"
+
+if [ "$XBPS_TARGET_LIBC" = "musl" ]; then
+	# see https://gitlab.freedesktop.org/polkit/polkit/-/issues/134
+	make_check=no
+fi
+
+if [ "$XBPS_CHECK_PKGS" ]; then
+	configure_args+=" -Dtests=true"
+fi
+
+post_install() {
+	vinstall ${FILESDIR}/polkit-1.pam 644 etc/pam.d polkit-1
+	vsv polkitd
+	# the build doesn't set setuid bits when not installing as root
+	chmod u+s "${DESTDIR}/usr/bin/pkexec"
+	chmod u+s "${DESTDIR}/usr/lib/polkit-1/polkit-agent-helper-1"
+	
+	# Delete undeeded devel files
+	rm -r "${DESTDIR}/usr/include"
+	rm -r "${DESTDIR}/usr/lib/pkgconfig"
+}
+
