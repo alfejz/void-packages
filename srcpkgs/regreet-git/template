@@ -1,0 +1,26 @@
+# Template file for 'regreet'
+pkgname=regreet-git
+_commit=c540225ef9b41dfeb201f7a77322b6fcc57e9db2
+version=2023.09.28.c540225
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=cargo
+configure_args="--all-features"
+#conf_files=""
+make_dirs="/var/log/regreet 0755 _greeter _greeter
+/var/cache/regreet 0755 _greeter _greeter"
+hostmakedepends="rust cargo gtk4-devel pkg-config"
+makedepends="gtk4"
+depends="greetd gtk4"
+short_desc="A customizable gtk greeter for greetd"
+maintainer="alfejz <alfredoejz@tutanota.com>"
+license="GPL-3.0-only"
+homepage="https://github.com/rharish101/ReGreet"
+#changelog="https://github.com/rharish101/ReGreet/releases"
+distfiles="https://github.com/rharish101/ReGreet/archive/${_commit}.tar.gz"
+checksum=5b7e422825daa10336a4e6ab749844c2b4778af6ce23cb2deba0d3bd1d7ca876
+
+post_install() {
+    vinstall regreet.sample.toml 644 usr/share/regreet
+}
