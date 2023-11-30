@@ -1,0 +1,12 @@
+diff -Naur a/install.sh b/install.sh
+--- a/install.sh	2023-04-16 08:50:40.000000000 -0600
++++ b/install.sh	2023-05-14 18:10:49.661023321 -0600
+@@ -215,7 +215,7 @@
+   ln -sr "${THEME_DIR}/32"                                                       "${THEME_DIR}/32@2x"
+   ln -sr "${THEME_DIR}/scalable"                                                 "${THEME_DIR}/scalable@2x"
+ 
+-  gtk-update-icon-cache "${THEME_DIR}"
++  #gtk-update-icon-cache "${THEME_DIR}"
+ }
+ 
+ while [ $# -gt 0 ]; do

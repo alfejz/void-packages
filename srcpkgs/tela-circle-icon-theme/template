@@ -1,0 +1,41 @@
+# Template file for 'tela-circle-icon-theme'
+pkgname=tela-circle-icon-theme
+_yy=2023
+_mm=10
+_dd=07
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#build_wrksrc=
+build_style=fetch
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache"
+makedepends=""
+depends=""
+short_desc="A flat,rounded and colorful icon theme by vinceliuice"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Tela-circle-icon-theme"
+changelog="https://github.com/vinceliuice/Tela-circle-icon-theme/releases"
+distfiles="https://github.com/vinceliuice/Tela-circle-icon-theme/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=c4ebde55f985d1de1861611b51c69ce442eb34abebd8fb39a0a1c9a7508b0ae6
+
+nostrip=yes
+nodebug=yes
+noverifyrdeps=yes
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "Tela-circle-icon-theme-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/icons 755
+    ${wrksrc}/install.sh -a -d "${DESTDIR}/usr/share/icons"
+}
