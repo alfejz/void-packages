@@ -1,0 +1,192 @@
+# Template file for 'tela-circle-icon-theme'
+pkgname=tela-circle-icon-theme
+_yy=2025
+_mm=02
+_dd=10
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#build_wrksrc=
+metapackage=yes
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache"
+makedepends=""
+depends="tela-circle-icon-theme-base tela-circle-icon-theme-black tela-circle-icon-theme-blue tela-circle-icon-theme-brown tela-circle-icon-theme-dracula tela-circle-icon-theme-green 
+         tela-circle-icon-theme-grey tela-circle-icon-theme-manjaro tela-circle-icon-theme-nord tela-circle-icon-theme-orange tela-circle-icon-theme-pink tela-circle-icon-theme-purple
+         tela-circle-icon-theme-red"
+short_desc="A flat,rounded and colorful icon theme by vinceliuice"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Tela-circle-icon-theme"
+changelog="https://github.com/vinceliuice/Tela-circle-icon-theme/releases"
+distfiles="https://github.com/vinceliuice/Tela-circle-icon-theme/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=61dece3ab25711af9516565dd300d23b1c532fe69eac5cad42d2e9c57fa7c331
+
+nostrip=yes
+nodebug=yes
+noverifyrdeps=yes
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "Tela-circle-icon-theme-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/icons 755
+    ${wrksrc}/install.sh -a -d "${DESTDIR}/usr/share/icons"
+}
+
+tela-circle-icon-theme-base_package() {
+	short_desc+=" - standard"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle"
+		vmove "usr/share/icons/Tela-circle-dark"
+		vmove "usr/share/icons/Tela-circle-light"
+	}
+}
+
+tela-circle-icon-theme-black_package() {
+	short_desc+=" - black variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-black"
+		vmove "usr/share/icons/Tela-circle-black-dark"
+		vmove "usr/share/icons/Tela-circle-black-light"
+	}
+}
+
+tela-circle-icon-theme-blue_package() {
+	short_desc+=" - blue variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-blue"
+		vmove "usr/share/icons/Tela-circle-blue-dark"
+		vmove "usr/share/icons/Tela-circle-blue-light"
+	}
+}
+
+tela-circle-icon-theme-brown_package() {
+	short_desc+=" - brown variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-brown"
+		vmove "usr/share/icons/Tela-circle-brown-dark"
+		vmove "usr/share/icons/Tela-circle-brown-light"
+	}
+}
+
+tela-circle-icon-theme-dracula_package() {
+	short_desc+=" - dracula variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-dracula"
+		vmove "usr/share/icons/Tela-circle-dracula-dark"
+		vmove "usr/share/icons/Tela-circle-dracula-light"
+	}
+}
+
+tela-circle-icon-theme-green_package() {
+	short_desc+=" - green variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-green"
+		vmove "usr/share/icons/Tela-circle-green-dark"
+		vmove "usr/share/icons/Tela-circle-green-light"
+	}
+}
+
+tela-circle-icon-theme-grey_package() {
+	short_desc+=" - grey variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-grey"
+		vmove "usr/share/icons/Tela-circle-grey-dark"
+		vmove "usr/share/icons/Tela-circle-grey-light"
+	}
+}
+
+tela-circle-icon-theme-manjaro_package() {
+	short_desc+=" - manjaro variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-manjaro"
+		vmove "usr/share/icons/Tela-circle-manjaro-dark"
+		vmove "usr/share/icons/Tela-circle-manjaro-light"
+	}
+}
+
+tela-circle-icon-theme-nord_package() {
+	short_desc+=" - nord variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-nord"
+		vmove "usr/share/icons/Tela-circle-nord-dark"
+		vmove "usr/share/icons/Tela-circle-nord-light"
+	}
+}
+
+tela-circle-icon-theme-orange_package() {
+	short_desc+=" - orange variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-orange"
+		vmove "usr/share/icons/Tela-circle-orange-dark"
+		vmove "usr/share/icons/Tela-circle-orange-light"
+	}
+}
+
+tela-circle-icon-theme-pink_package() {
+	short_desc+=" - pink variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-pink"
+		vmove "usr/share/icons/Tela-circle-pink-dark"
+		vmove "usr/share/icons/Tela-circle-pink-light"
+	}
+}
+
+tela-circle-icon-theme-purple_package() {
+	short_desc+=" - purple variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-purple"
+		vmove "usr/share/icons/Tela-circle-purple-dark"
+		vmove "usr/share/icons/Tela-circle-purple-light"
+	}
+}
+
+tela-circle-icon-theme-red_package() {
+	short_desc+=" - red variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-red"
+		vmove "usr/share/icons/Tela-circle-red-dark"
+		vmove "usr/share/icons/Tela-circle-red-light"
+	}
+}
+
+tela-circle-icon-theme-ubuntu_package() {
+	short_desc+=" - ubuntu variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-ubuntu"
+		vmove "usr/share/icons/Tela-circle-ubuntu-dark"
+		vmove "usr/share/icons/Tela-circle-ubuntu-light"
+	}
+}
+
+tela-circle-icon-theme-yellow_package() {
+	short_desc+=" - yellow variant"
+	depends="tela-circle-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-circle-yellow"
+		vmove "usr/share/icons/Tela-circle-yellow-dark"
+		vmove "usr/share/icons/Tela-circle-yellow-light"
+	}
+}
