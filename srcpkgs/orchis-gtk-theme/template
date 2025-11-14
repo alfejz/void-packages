@@ -1,0 +1,35 @@
+# Template file for 'orchis-gtk-theme'
+pkgname=orchis-gtk-theme
+_yy=2025
+_mm=04
+_dd=25
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache sassc"
+makedepends=""
+depends="gtk-engine-murrine gnome-themes-extra gnome-themes-extra-gtk sassc"
+short_desc="A modern style rounded theme for gnome and gtk applications"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Orchis-theme"
+changelog="https://github.com/vinceliuice/Orchis-theme/releases"
+distfiles="https://github.com/vinceliuice/Orchis-theme/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=d479653415e271fe9f3324f1f4f51cf28b1134164667142c6c6a6db41cf4da9b
+
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "Orchis-theme-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/themes 755
+    ${wrksrc}/install.sh -d "${DESTDIR}/usr/share/themes" --tweaks macos
+}

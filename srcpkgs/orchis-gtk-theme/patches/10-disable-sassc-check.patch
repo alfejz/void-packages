@@ -1,0 +1,41 @@
+diff -Naur a/core.sh b/core.sh
+--- a/core.sh	2025-04-25 06:44:05.000000000 -0600
++++ b/core.sh	2025-05-31 21:35:15.573163215 -0600
+@@ -299,22 +299,7 @@
+ 
+ #  Install needed packages
+ install_package() {
+-  if [ ! "$(which sassc 2> /dev/null)" ]; then
+-    echo sassc needs to be installed to generate the css.
+-    if has_command zypper; then
+-      sudo zypper in sassc
+-    elif has_command apt; then
+-      sudo apt install sassc
+-    elif has_command apt-get; then
+-      sudo apt-get install sassc
+-    elif has_command dnf; then
+-      sudo dnf install sassc
+-    elif has_command yum; then
+-      sudo yum install sassc
+-    elif has_command pacman; then
+-      sudo pacman -S --noconfirm sassc
+-    fi
+-  fi
++  echo ""
+ }
+ 
+ check_shell() {
+diff -Naur a/parse-sass.sh b/parse-sass.sh
+--- a/parse-sass.sh	2025-04-25 06:44:05.000000000 -0600
++++ b/parse-sass.sh	2025-05-31 20:08:53.015370451 -0600
+@@ -1,10 +1,5 @@
+ #!/bin/bash
+ 
+-if [[ ! "$(command -v sassc)" ]]; then
+-  echo "'sassc' needs to be installed to generate the CSS."
+-  exit 1
+-fi
+-
+ SASSC_OPT=('-M' '-t' 'expanded')
+ 
+ _COLOR_VARIANTS=('' '-Light' '-Dark')
