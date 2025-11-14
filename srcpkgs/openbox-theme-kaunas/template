@@ -1,0 +1,33 @@
+# Template file for 'openbox-theme-kaunas'
+pkgname=openbox-theme-kaunas
+version=1.0.1
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="tar gzip"
+makedepends=""
+depends=""
+short_desc="A dark rounded theme for openbox inspired by windows 11"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="MIT"
+homepage="https://github.com/Dovias/Kaunas"
+changelog="https://github.com/Dovias/Kaunas/releases/tag/1.0.1"
+distfiles="https://github.com/Dovias/Kaunas/archive/refs/tags/1.0.1.tar.gz"
+checksum=33ddb08bfd103d07afff81113d88368dff05d047bb171cc25c2943cdcea8b576
+
+do_extract() {
+	cd ${wrksrc}
+	cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${version}.tar.gz" "${wrksrc}/${pkgname}-${version}.tar.gz"
+	tar -xzvf "${wrksrc}/${pkgname}-${version}.tar.gz" -C "${wrksrc}/"
+}
+
+do_install() {
+	vmkdir /usr/share/themes 755
+	cp -rvf "${wrksrc}/Kaunas-${version}" "${DESTDIR}/usr/share/themes/Kaunas"
+	vlicense "${wrksrc}/Kaunas-${version}/LICENSE"
+}
