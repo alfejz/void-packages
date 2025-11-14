@@ -1,0 +1,191 @@
+# Template file for 'tela-icon-theme'
+pkgname=tela-icon-theme
+_yy=2025
+_mm=02
+_dd=10
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage=yes
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache"
+makedepends=""
+depends="tela-icon-theme-base tela-icon-theme-black tela-icon-theme-blue tela-icon-theme-brown tela-icon-theme-dracula tela-icon-theme-green 
+         tela-icon-theme-grey tela-icon-theme-manjaro tela-icon-theme-nord tela-icon-theme-orange tela-icon-theme-pink tela-icon-theme-purple
+         tela-icon-theme-red"
+short_desc="A flat and colorful icon theme by vinceliuice"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Tela-icon-theme"
+changelog="https://github.com/vinceliuice/Tela-icon-theme/releases"
+distfiles="https://github.com/vinceliuice/Tela-icon-theme/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=b1f3e76e307bd48b17f0bf55d2f5a7ce9f445b127f427e11f79a632a79e3cf4f
+
+nostrip=yes
+nodebug=yes
+noverifyrdeps=yes
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "Tela-icon-theme-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/icons 755
+    ${wrksrc}/install.sh -a -d "${DESTDIR}/usr/share/icons"
+}
+
+tela-icon-theme-base_package() {
+	short_desc+=" - standard"
+	pkg_install() {
+		vmove "usr/share/icons/Tela"
+		vmove "usr/share/icons/Tela-dark"
+		vmove "usr/share/icons/Tela-light"
+	}
+}
+
+tela-icon-theme-black_package() {
+	short_desc+=" - black variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-black"
+		vmove "usr/share/icons/Tela-black-dark"
+		vmove "usr/share/icons/Tela-black-light"
+	}
+}
+
+tela-icon-theme-blue_package() {
+	short_desc+=" - blue variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-blue"
+		vmove "usr/share/icons/Tela-blue-dark"
+		vmove "usr/share/icons/Tela-blue-light"
+	}
+}
+
+tela-icon-theme-brown_package() {
+	short_desc+=" - brown variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-brown"
+		vmove "usr/share/icons/Tela-brown-dark"
+		vmove "usr/share/icons/Tela-brown-light"
+	}
+}
+
+tela-icon-theme-dracula_package() {
+	short_desc+=" - dracula variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-dracula"
+		vmove "usr/share/icons/Tela-dracula-dark"
+		vmove "usr/share/icons/Tela-dracula-light"
+	}
+}
+
+tela-icon-theme-green_package() {
+	short_desc+=" - green variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-green"
+		vmove "usr/share/icons/Tela-green-dark"
+		vmove "usr/share/icons/Tela-green-light"
+	}
+}
+
+tela-icon-theme-grey_package() {
+	short_desc+=" - grey variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-grey"
+		vmove "usr/share/icons/Tela-grey-dark"
+		vmove "usr/share/icons/Tela-grey-light"
+	}
+}
+
+tela-icon-theme-manjaro_package() {
+	short_desc+=" - manjaro variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-manjaro"
+		vmove "usr/share/icons/Tela-manjaro-dark"
+		vmove "usr/share/icons/Tela-manjaro-light"
+	}
+}
+
+tela-icon-theme-nord_package() {
+	short_desc+=" - nord variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-nord"
+		vmove "usr/share/icons/Tela-nord-dark"
+		vmove "usr/share/icons/Tela-nord-light"
+	}
+}
+
+tela-icon-theme-orange_package() {
+	short_desc+=" - orange variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-orange"
+		vmove "usr/share/icons/Tela-orange-dark"
+		vmove "usr/share/icons/Tela-orange-light"
+	}
+}
+
+tela-icon-theme-pink_package() {
+	short_desc+=" - pink variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-pink"
+		vmove "usr/share/icons/Tela-pink-dark"
+		vmove "usr/share/icons/Tela-pink-light"
+	}
+}
+
+tela-icon-theme-purple_package() {
+	short_desc+=" - purple variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-purple"
+		vmove "usr/share/icons/Tela-purple-dark"
+		vmove "usr/share/icons/Tela-purple-light"
+	}
+}
+
+tela-icon-theme-red_package() {
+	short_desc+=" - red variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-red"
+		vmove "usr/share/icons/Tela-red-dark"
+		vmove "usr/share/icons/Tela-red-light"
+	}
+}
+
+tela-icon-theme-ubuntu_package() {
+	short_desc+=" - ubuntu variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-ubuntu"
+		vmove "usr/share/icons/Tela-ubuntu-dark"
+		vmove "usr/share/icons/Tela-ubuntu-light"
+	}
+}
+
+tela-icon-theme-yellow_package() {
+	short_desc+=" - yellow variant"
+	depends="tela-icon-theme-base-${version}_${revision}"
+	pkg_install() {
+		vmove "usr/share/icons/Tela-yellow"
+		vmove "usr/share/icons/Tela-yellow-dark"
+		vmove "usr/share/icons/Tela-yellow-light"
+	}
+}
+
