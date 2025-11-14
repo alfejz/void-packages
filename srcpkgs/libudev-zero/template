@@ -1,0 +1,48 @@
+# Template file for 'libudev-zero'
+pkgname=libudev-zero
+version=1.0.3
+revision=1
+_eudevver=3.2.11_1
+_sover=1.6.3
+#archs="i686 x86_64"
+build_style=gnu-makefile
+make_build_args=""
+make_install_args="STRIP=true PREFIX=/usr"
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="${XBPS_TARGET_LIBC} make"
+makedepends="${XBPS_TARGET_LIBC}"
+depends=""
+provides="eudev-${_eudevver} eudev-libudev-${_eudevver}"
+short_desc="Drop-in replacement for libudev intended for compatibility with any device manager"
+maintainer="Orphaned <orphan@voidlinux.org>"
+conflicts="eudev>=0 eudev-libudev>=0"
+replaces="eudev>=0 eudev-libudev>=0"
+license="ISC"
+homepage="https://github.com/illiliti/libudev-zero"
+distfiles="https://github.com/illiliti/libudev-zero/archive/refs/tags/${version}.tar.gz"
+checksum=0bd89b657d62d019598e6c7ed726ff8fed80e8ba092a83b484d66afb80b77da5
+
+do_build() {
+	LIBUDEV_SO=${_sover} make ${makejobs} ${make_build_args}
+
+	cd ${wrksrc}/contrib
+	gcc $CFLAGS -o libudev-helper helper.c
+}
+
+do_install() {
+	LIBUDEV_SO=${_sover} make DESTDIR=${DESTDIR} ${make_install_args} install
+
+	vinstall contrib/libudev-helper 755 usr/bin
+}
+
+libudev-zero-devel_package() {
+	short_desc+=" - development files"
+	depends=""
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/*.so
+		vmove usr/lib/*.a
+		vmove usr/lib/pkgconfig
+	}
+}

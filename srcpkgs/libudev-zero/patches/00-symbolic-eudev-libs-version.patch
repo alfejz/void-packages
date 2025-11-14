@@ -1,0 +1,10 @@
+--- a/Makefile
++++ b/Makefile
+@@ -59,2 +59,3 @@ install-shared: libudev.so.1 install-hea
+ 	ln -fs libudev.so.1 ${DESTDIR}${LIBDIR}/libudev.so
++	ln -fs libudev.so.1 ${DESTDIR}${LIBDIR}/libudev.so.${LIBUDEV_SO}
+ 
+@@ -70,2 +71,3 @@ uninstall:
+           ${DESTDIR}${LIBDIR}/libudev.so.1 \
++          ${DESTDIR}${LIBDIR}/libudev.so.${LIBUDEV_SO} \
+           ${DESTDIR}${PKGCONFIGDIR}/libudev.pc \
