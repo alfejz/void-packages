@@ -1,0 +1,61 @@
+# Template file for 'orchis-kde-theme'
+pkgname=orchis-kde-theme
+_commit=b2a96919eee40264e79db402b915f926436100ad
+_yy=2025
+_mm=10
+_dd=18
+version=${_yy}.${_mm}.${_dd}.git$(expr substr "$_commit" 1 6)
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gzip tar gtk-update-icon-cache sassc"
+makedepends=""
+depends="aurorae kvantum"
+short_desc="A modern style rounded theme for kde and qt applications"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Orchis-kde"
+changelog="${homepage}/releases"
+distfiles="${homepage}/archive/${_commit}.tar.gz"
+checksum=915e1c53589f33a403ac7a72746d657f39ea3529aa80af8ab9ef4e7d2e79cdc5
+
+noshlibprovides=yes
+
+do_extract() {
+    cd "${wrksrc}"
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_commit}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_commit}.tar.gz" "Orchis-kde-${_commit}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /usr/share/aurorae/themes 755
+    vmkdir /usr/share/color-schemes 755
+    vmkdir /usr/share/plasma/desktoptheme 755
+    vmkdir /usr/share/plasma/look-and-feel 755
+    vmkdir /usr/share/Kvantum 755
+    vmkdir /usr/share/wallpapers 755
+    
+    cp -r "${wrksrc}"/aurorae/* "${DESTDIR}"/usr/share/aurorae/themes/ 
+
+    vcopy "${wrksrc}"/color-schemes/*.colors usr/share/color-schemes
+
+    cp -r "${wrksrc}"/plasma/desktoptheme/Orchis "${DESTDIR}"/usr/share/plasma/desktoptheme/
+    cp -r "${wrksrc}"/plasma/desktoptheme/Orchis-dark "${DESTDIR}"/usr/share/plasma/desktoptheme/
+    vmkdir /usr/share/plasma/desktoptheme/Orchis/icons 755
+    vmkdir /usr/share/plasma/desktoptheme/Orchis-dark/icons 755
+    vcopy "${wrksrc}"/plasma/desktoptheme/icons/* usr/share/plasma/desktoptheme/Orchis/icons
+    vcopy "${wrksrc}"/plasma/desktoptheme/icons/* usr/share/plasma/desktoptheme/Orchis-dark/icons
+    vmkdir /usr/share/plasma/desktoptheme/Orchis/colors 755
+    vmkdir /usr/share/plasma/desktoptheme/Orchis-dark/colors 755
+    vcopy "${wrksrc}"/color-schemes/*.colors usr/share/plasma/desktoptheme/Orchis/colors
+    vcopy "${wrksrc}"/color-schemes/*.colors usr/share/plasma/desktoptheme/Orchis-dark/colors
+    
+    cp -r "${wrksrc}"/plasma/look-and-feel/* "${DESTDIR}"/usr/share/plasma/look-and-feel/
+
+    cp -r "${wrksrc}"/Kvantum/* "${DESTDIR}"/usr/share/Kvantum/
+
+    cp -r "${wrksrc}"/wallpaper/* "${DESTDIR}"/usr/share/wallpapers/
+}
