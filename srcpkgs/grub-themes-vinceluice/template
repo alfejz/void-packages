@@ -1,0 +1,78 @@
+# Template file for 'grub-themes-vinceluice'
+_yy=2025
+_mm=07
+_dd=23
+pkgname=grub-themes-vinceluice
+version=${_yy}.${_mm}.${_dd}
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage=yes
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="tar gzip"
+makedepends=""
+depends="grub-theme-tela grub-theme-vimix grub-theme-stylish grub-theme-whitesur"
+short_desc="Various modern themes for grub2 designed by vinceluice"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/grub2-themes"
+changelog="https://github.com/vinceliuice/grub2-themes/releases"
+distfiles="https://github.com/vinceliuice/grub2-themes/archive/refs/tags/${_yy}-${_mm}-${_dd}.tar.gz"
+checksum=7e10d0fcc8edd94597ffe3591132688ee243cdf9373b3d6e282eefe785d67c29
+
+nostrip=yes
+nodebug=yes
+noverifyrdeps=yes
+noshlibprovides=yes
+
+do_extract() {
+    cd ${wrksrc}
+    cp "${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_yy}-${_mm}-${_dd}.tar.gz" "${wrksrc}/"
+    tar -xzvf "${wrksrc}/${_yy}-${_mm}-${_dd}.tar.gz" "grub2-themes-${_yy}-${_mm}-${_dd}/" \
+        --strip-components=1
+}
+
+do_install() {
+    vmkdir /boot/grub/themes 755
+    ${wrksrc}/install.sh -g ${DESTDIR}/boot/grub/themes -t tela -i color
+    ${wrksrc}/install.sh -g ${DESTDIR}/boot/grub/themes -t vimix -i white
+    ${wrksrc}/install.sh -g ${DESTDIR}/boot/grub/themes -t stylish -i color
+    ${wrksrc}/install.sh -g ${DESTDIR}/boot/grub/themes -t whitesur -i whitesur
+}
+
+grub-theme-tela_package() {
+    short_desc+=" - tela a modern theme with rounded color icons"
+    depends="grub"
+	pkg_install() {
+            vmove "boot/grub/themes/tela"
+        }
+}
+
+grub-theme-vimix_package() {
+    short_desc+=" - vimix a dark grub theme whith flat white icons"
+    depends="grub"
+	pkg_install() {
+            vmove "boot/grub/themes/vimix"
+        }
+}
+
+grub-theme-stylish_package() {
+    short_desc+=" - stylish a modern dark theme with rounded color icons"
+    depends="grub"
+	pkg_install() {
+            vmove "boot/grub/themes/stylish"
+        }
+}
+
+grub-theme-whitesur_package() {
+    short_desc="Grub theme inspired in mac os"
+    depends="grub"
+	pkg_install() {
+            vmove "boot/grub/themes/whitesur"
+        }
+}
+
