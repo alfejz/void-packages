@@ -1,0 +1,24 @@
+# Template file for 'sfwbar'
+pkgname=sfwbar
+_version=1.0
+_release=beta16.1
+version=${_version}.${_release}
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+build_style=meson
+#configure_args=""
+#make_build_args=""
+#make_install_args=""
+#conf_files=""
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends="gtk+3-devel gtk-layer-shell-devel json-c pkg-config cmake alsa-lib-devel pulseaudio-devel libmpdclient-devel"
+makedepends="json-c-devel libpulseaudio alsa-lib"
+depends="gtk+3 gtk-layer-shell json-c"
+short_desc="A flexible taskbar application for wayland compositors"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/LBCrion/sfwbar"
+changelog="https://github.com/LBCrion/sfwbar/releases"
+distfiles="https://github.com/LBCrion/sfwbar/archive/refs/tags/v${_version}_${_release}.tar.gz"
+checksum=98f3d77713a2e3a10fcb09c365c92fa96ab84bf157e59bd3f4d4d274ce0496e8
