@@ -1,0 +1,196 @@
+# Template file for 'tela-circle-icon-theme'
+pkgname=tela-circle-icon-theme
+version=2025.02.10
+revision=1
+#archs="i686 x86_64"
+metapackage="yes"
+hostmakedepends=""
+makedepends=""
+depends="tela-circle-icon-theme-standard tela-circle-icon-theme-black
+ tela-circle-icon-theme-blue tela-circle-icon-theme-brown tela-circle-icon-theme-green
+ tela-circle-icon-theme-grey tela-circle-icon-theme-orange tela-circle-icon-theme-pink
+ tela-circle-icon-theme-purple tela-circle-icon-theme-red tela-circle-icon-theme-yellow
+ tela-circle-icon-theme-manjaro tela-circle-icon-theme-ubuntu tela-circle-icon-theme-dracula
+ tela-circle-icon-theme-nord"
+short_desc="A flat colorful rounded icon theme (metapackage with all variants)"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-only"
+homepage="https://github.com/vinceliuice/Tela-circle-icon-theme"
+changelog="https://github.com/vinceliuice/Tela-circle-icon-theme/releases/tag/${version//./-}"
+distfiles="https://github.com/vinceliuice/Tela-circle-icon-theme/archive/refs/tags/${version//./-}.tar.gz"
+checksum=61dece3ab25711af9516565dd300d23b1c532fe69eac5cad42d2e9c57fa7c331
+
+# Disable these, this package only contains icons files and aren´t need
+# also leave them enabled makes this package build more slower
+noshlibsprovides="yes"
+nostrip="yes"
+noverifyrdeps="yes"
+
+do_install() {
+	./install.sh -a -c -d "$DESTDIR/usr/share/icons"
+}
+
+tela-circle-icon-theme-standard_package() {
+	short_desc="A flat colorful rounded icon theme"
+	depends="gtk-update-icon-cache"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle
+		vmove usr/share/icons/Tela-circle-dark
+		vmove usr/share/icons/Tela-circle-light
+	}
+}
+
+tela-circle-icon-theme-black_package() {
+	short_desc="A flat colorful rounded icon theme - black variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-black
+		vmove usr/share/icons/Tela-circle-black-dark
+		vmove usr/share/icons/Tela-circle-black-light
+	}
+}
+
+tela-circle-icon-theme-blue_package() {
+	short_desc="A flat colorful rounded icon theme - blue variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-blue
+		vmove usr/share/icons/Tela-circle-blue-dark
+		vmove usr/share/icons/Tela-circle-blue-light
+	}
+}
+
+tela-circle-icon-theme-brown_package() {
+	short_desc="A flat colorful rounded icon theme - brown variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-brown
+		vmove usr/share/icons/Tela-circle-brown-dark
+		vmove usr/share/icons/Tela-circle-brown-light
+	}
+}
+
+tela-circle-icon-theme-green_package() {
+	short_desc="A flat colorful rounded icon theme - green variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-green
+		vmove usr/share/icons/Tela-circle-green-dark
+		vmove usr/share/icons/Tela-circle-green-light
+	}
+}
+
+tela-circle-icon-theme-grey_package() {
+	short_desc="A flat colorful rounded icon theme - grey variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-grey
+		vmove usr/share/icons/Tela-circle-grey-dark
+		vmove usr/share/icons/Tela-circle-grey-light
+	}
+}
+
+tela-circle-icon-theme-orange_package() {
+	short_desc="A flat colorful rounded icon theme - orange variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-orange
+		vmove usr/share/icons/Tela-circle-orange-dark
+		vmove usr/share/icons/Tela-circle-orange-light
+	}
+}
+
+tela-circle-icon-theme-pink_package() {
+	short_desc="A flat colorful rounded icon theme - pink variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-pink
+		vmove usr/share/icons/Tela-circle-pink-dark
+		vmove usr/share/icons/Tela-circle-pink-light
+	}
+}
+
+tela-circle-icon-theme-purple_package() {
+	short_desc="A flat colorful rounded icon theme - purple variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-purple
+		vmove usr/share/icons/Tela-circle-purple-dark
+		vmove usr/share/icons/Tela-circle-purple-light
+	}
+}
+
+tela-circle-icon-theme-red_package() {
+	short_desc="A flat colorful rounded icon theme - red variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-red
+		vmove usr/share/icons/Tela-circle-red-dark
+		vmove usr/share/icons/Tela-circle-red-light
+	}
+}
+
+tela-circle-icon-theme-yellow_package() {
+	short_desc="A flat colorful rounded icon theme - yellow variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-yellow
+		vmove usr/share/icons/Tela-circle-yellow-dark
+		vmove usr/share/icons/Tela-circle-yellow-light
+	}
+}
+
+tela-circle-icon-theme-manjaro_package() {
+	short_desc="A flat colorful rounded icon theme - teal manjaro variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-manjaro
+		vmove usr/share/icons/Tela-circle-manjaro-dark
+		vmove usr/share/icons/Tela-circle-manjaro-light
+	}
+}
+
+tela-circle-icon-theme-ubuntu_package() {
+	short_desc="A flat colorful rounded icon theme - ubuntu variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-ubuntu
+		vmove usr/share/icons/Tela-circle-ubuntu-dark
+		vmove usr/share/icons/Tela-circle-ubuntu-light
+	}
+}
+
+tela-circle-icon-theme-dracula_package() {
+	short_desc="A flat colorful rounded icon theme - dracula variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-dracula
+		vmove usr/share/icons/Tela-circle-dracula-dark
+		vmove usr/share/icons/Tela-circle-dracula-light
+	}
+}
+
+tela-circle-icon-theme-nord_package() {
+	short_desc="A flat colorful rounded icon theme - nord variant"
+	depends="gtk-update-icon-cache tela-circle-icon-theme-standard"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove usr/share/icons/Tela-circle-nord
+		vmove usr/share/icons/Tela-circle-nord-dark
+		vmove usr/share/icons/Tela-circle-nord-light
+	}
+}
