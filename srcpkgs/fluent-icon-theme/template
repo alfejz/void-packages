@@ -1,0 +1,76 @@
+# Template file for 'fluent-icon-theme'
+pkgname=fluent-icon-theme
+version=2025.08.21
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage="yes"
+hostmakedepends=""
+makedepends=""
+# Depends be added dinamically
+depends="fluent-icon-theme-base"
+short_desc="A fluent design icon theme (metapackage)"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-only"
+homepage="https://github.com/vinceliuice/Fluent-icon-theme"
+changelog="https://github.com/vinceliuice/Fluent-icon-theme/releases/tag/${version//./-}"
+distfiles="https://github.com/vinceliuice/Fluent-icon-theme/archive/refs/tags/${version//./-}.tar.gz"
+checksum=553305e3882c896b6f82e12db1dfc9549af63487a8cd26fd5a08303298aedbe3
+
+# Uneeded things for pkg content, for optimize buildtime
+noverifyrdeps="yes"
+noshlibprovides="yes"
+nostrip="yes"
+
+# subpackages will de added dimamically
+subpackages="fluent-icon-theme-base"
+
+# Color variant(s) to be generated, separated by spaces
+# Valid values are: standard green grey orange pink purple red yellow
+_colors="standard green grey orange pink purple red yellow"
+[ -n "${_colors[@]// }" ] || msg_error "_colors is empty"
+
+do_install() {
+	./install.sh -d "$DESTDIR/usr/share/icons" ${_colors[@]}
+}
+
+fluent-icon-theme-base_package() {
+	depends="gtk-update-icon-cache"
+	short_desc="A fluent design icon theme - core files"
+	triggers="gtk-icon-cache"
+	pkg_install() {
+		vmove "usr/share/icons/.Fluent-base"
+		vmove "usr/share/icons/.Fluent-dark-base"
+		vmove "usr/share/icons/.Fluent-light-base"
+	}
+}
+
+# Generate subpackages based on _colors value, subpackages will be named
+# fluent-icon-theme-<color>
+for e in ${_colors[@]}; do
+	_subpkgname="fluent-icon-theme-${e}"
+	case "$e" in
+		green|grey|orange|pink|purple|red|yellow)
+			_themeDir="Fluent-${e}"
+			;;
+		standard)
+			_themeDir="Fluent"
+			;;
+		*)
+			msg_error "Invalid value \"${e}\" in _colors"
+			;;
+	esac
+
+	subpackages+=" ${_subpkgname}"
+	depends+=" ${_subpkgname}"
+	eval "${_subpkgname}_package() {
+		depends=\"gtk-update-icon-cache fluent-icon-theme-base\"
+		short_desc=\"A fluent design icon theme - ${e} variant\"
+		triggers=\"gtk-icon-cache\"
+		pkg_install() {
+			vmove \"usr/share/icons/${_themeDir}\"
+			vmove \"usr/share/icons/${_themeDir}-light\"
+			vmove \"usr/share/icons/${_themeDir}-dark\"
+		}
+	}"
+done
