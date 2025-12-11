@@ -1,0 +1,14 @@
+Do not generate icon cache on package generation,
+xbps already do this on install
+
+diff -Naur a/install.sh b/install.sh
+--- a/install.sh	2025-07-19 04:34:28.000000000 -0600
++++ b/install.sh	2025-12-10 17:32:36.046853166 -0600
+@@ -130,7 +130,6 @@
+     ln -sf status status@2x
+   )
+ 
+-  gtk-update-icon-cache "${THEME_DIR}"
+ }
+ 
+ notint_folder() {

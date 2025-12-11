@@ -1,0 +1,104 @@
+# Template file for 'colloid-icon-theme'
+pkgname=colloid-icon-theme
+version=2025.07.19
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage="yes"
+hostmakedepends=""
+makedepends=""
+# Empty depends will be generated later dinamically. To each icon schema metapkg
+depends=""
+short_desc="Colloid icon theme (metapackage)"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/vinceliuice/Colloid-icon-theme"
+changelog="https://github.com/vinceliuice/Colloid-icon-theme/releases/tag/${version//./-}"
+distfiles="https://github.com/vinceliuice/Colloid-icon-theme/archive/refs/tags/${version//./-}.tar.gz"
+checksum=3ae00b7c31089954a6d1dc9cd4de2a7d876a32663128d1a24d8a7ba3a6aa23e7
+
+# Disable these, this package only contains icons files and aren´t need
+# also leave them enabled makes this package build more slower
+noshlibsprovides="yes"
+nostrip="yes"
+noverifyrdeps="yes"
+
+# List will be generated later
+subpackages=""
+
+# Schemes and colors that will be generated. Space separated value(s).
+# Valid schemes: default catppuccin dracula everforest gruvbox nord
+_schemes="default catppuccin dracula everforest gruvbox nord"
+# Valid colors: default purple pink red orange yellow green teal grey
+_colors="default purple pink red orange yellow green teal grey"
+
+
+do_install() {
+	# validity check of _schemes and _colors occurs at install.sh install script.
+	./install.sh -s ${_schemes[@]} -t ${_colors[@]} -d "$DESTDIR/usr/share/icons"
+}
+
+# Dinamically generate subpackages based on _schemes and _colors vars
+# Subpkgs will be named with schema Colloid-icon-theme-<scheme>-<color>, scheme
+# or/and colors aren't used in the name if has "defaut" value
+# Also a metapackage with name Colloid-icon-theme-<scheme> will be created, this
+# package has depends on all colors generated for each schema
+
+for s in ${_schemes[@]}; do
+	case "$s" in
+		catppuccin|dracula|everforest|gruvbox|nord)
+			_base_name="colloid-icon-theme-${s}"
+			_base_theme="-${s^}"
+			;;
+		"default")
+			_base_name="colloid-icon-theme"
+			_base_theme=""
+			;;
+		*)
+			msg_error "${s} is not valid value for _schemes\n"
+			;;
+	esac
+
+	_meta_depends=""
+	for e in ${_colors[@]}; do
+		case "$e" in
+			purple|pink|red|orange|yellow|green|teal|grey)
+				_name="${_base_name}-${e}"
+				_theme="Colloid-${e^}${_base_theme}"
+				;;
+			"default")
+				_name="${_base_name}-standard"
+				_theme="Colloid${_base_theme}"
+				;;
+			*)
+				msg_error "${e} is not valid value for _colors\n"
+				;;
+		esac
+
+		subpackages+="${_name} "
+		_meta_depends+="${_name} "
+
+		eval "${_name}_package() {
+			depends=\"gtk-update-icon-cache\"
+			short_desc=\"Colloid icon theme - ${s} ${e} variant\"
+			triggers=\"gtk-icon-cache\"
+			pkg_install() {
+				vmove \"usr/share/icons/${_theme}\"
+				vmove \"usr/share/icons/${_theme}-Dark\"
+				vmove \"usr/share/icons/${_theme}-Light\"
+			}
+		}"
+
+	done
+
+	subpackages+="colloid-icon-theme-${s} "
+
+	eval "colloid-icon-theme-${s}_package() {
+		metapackage=\"yes\"
+		depends=\"${_meta_depends}\"
+		short_desc=\"Colloid icon theme - ${s} metapackage\"
+	}"
+
+	depends+="colloid-icon-theme-${s} "
+	
+done
