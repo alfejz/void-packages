@@ -1,0 +1,64 @@
+# Template file for 'vimix-icon-theme'
+pkgname=vimix-icon-theme
+version=2025.08.26
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage="yes"
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends=""
+depends=""
+short_desc="A material design icon theme"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="CC-BY-SA-4.0"
+homepage="https://github.com/vinceliuice/Vimix-icon-theme"
+changelog="https://github.com/vinceliuice/Vimix-icon-theme/releases/tag/${version//./-}"
+distfiles="https://github.com/vinceliuice/Vimix-icon-theme/archive/refs/tags/${version//./-}.tar.gz"
+checksum=b9403dea551556f7831f74141721df717d7098aa4136f4f43aaaee0e38b1229b
+
+# Uneeded things for pkg content, to optimize buildtime
+noverifyrdeps="yes"
+noshlibprovides="yes"
+nostrip="yes"
+
+# Color variant(s) to be generated, separated by spaces
+# Valid values are: standard amber amethyst axinite beryl doder ruby jade black white
+_colors="standard amber amethyst axinite beryl doder ruby jade black white"
+[ -n "${_colors[@]// }" ] || msg_error "_colors is empty"
+
+do_install() {
+	# Workaround for install.sh not installing standard variant if more colors are passed
+	[[ $_colors[@] =~ (^| )standard($| ) ]] && ./install.sh -d "$DESTDIR/usr/share/icons"
+
+	./install.sh -d "$DESTDIR/usr/share/icons" ${_colors[@]}
+}
+
+# Generate subpackages based on _colors value, subpackages will be named
+# vimix-icon-theme-<color>
+for e in ${_colors[@]}; do
+	_subpkgname="vimix-icon-theme-${e}"
+	case "$e" in
+		amber|amethyst|axinite|beryl|doder|ruby|jade|black|white)
+			_themeDir="Vimix-${e}"
+			;;
+		standard)
+			_themeDir="Vimix"
+			;;
+		*)
+			msg_error "Invalid value \"${e}\" in _colors"
+			;;
+	esac
+
+	subpackages+=" ${_subpkgname}"
+	depends+=" ${_subpkgname}"
+	eval "${_subpkgname}_package() {
+		depends=\"gtk-update-icon-cache\"
+		short_desc=\"A material design icon theme - ${e} variant\"
+		triggers=\"gtk-icon-cache\"
+		pkg_install() {
+			vmove \"usr/share/icons/${_themeDir}\"
+			vmove \"usr/share/icons/${_themeDir}-dark\"
+		}
+	}"
+done

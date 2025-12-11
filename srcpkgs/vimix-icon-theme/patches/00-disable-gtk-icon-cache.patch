@@ -1,0 +1,14 @@
+Disable gtk-update-icon-cache. XBPS already do this on install
+
+diff -Naur a/install.sh b/install.sh
+--- a/install.sh	2025-08-26 02:47:59.000000000 -0600
++++ b/install.sh	2025-12-11 14:50:34.984492108 -0600
+@@ -172,7 +172,7 @@
+ #  install_folder_colors "${THEME_DIR}"
+ 
+   cp -r "${SRC_DIR}/src/cursors/dist${brightprefix}" "${THEME_DIR}/cursors"
+-  gtk-update-icon-cache "${THEME_DIR}"
++  #gtk-update-icon-cache "${THEME_DIR}"
+ }
+ 
+ function clean_old_theme {
