@@ -1,0 +1,15 @@
+Disable icon cache generation. Because XBPS already handes this at
+install time
+
+diff -Naur a/install.sh b/install.sh
+--- a/install.sh	2025-02-15 08:25:54.000000000 -0600
++++ b/install.sh	2025-12-11 16:42:41.192857504 -0600
+@@ -161,7 +161,7 @@
+   fi
+ 
+   cd "${dest}" || exit
+-  gtk-update-icon-cache "${name}${theme}${color}"
++  #gtk-update-icon-cache "${name}${theme}${color}"
+ }
+ 
+ install_cursors_scalable() {

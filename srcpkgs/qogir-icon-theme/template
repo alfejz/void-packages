@@ -1,0 +1,66 @@
+# Template file for 'qogir-icon-theme'
+pkgname=qogir-icon-theme
+version=2025.02.15
+revision=1
+#archs="i686 x86_64"
+#build_wrksrc=
+metapackage="yes"
+#make_dirs="/var/log/dir 0755 root root"
+hostmakedepends=""
+makedepends=""
+depends=""
+short_desc="Qogir flat icon theme (metapackage)"
+maintainer="alfejz <alfredoejz@mailo.com>"
+license="GPL-3.0-only"
+homepage="https://github.com/vinceliuice/Qogir-icon-theme"
+changelog="https://github.com/vinceliuice/Qogir-icon-theme/releases/tag/${version//./-}"
+distfiles="https://github.com/vinceliuice/Qogir-icon-theme/archive/refs/tags/${version//./-}.tar.gz"
+checksum=b0d07cad5601e0341a53a62df0ed111823b75fc38741d435486620a59fb239ee
+
+# Uneeded things for pkg content
+noverifyrdeps="yes"
+noshlibprovides="yes"
+nostrip="yes"
+
+# Color variant(s) to be generated, separated by spaces
+# Valid values are: default manjaro ubuntu
+_colors="default manjaro ubuntu"
+[ -n "${_colors[@]// }" ] || msg_error "_colors is empty"
+
+do_install() {
+	#Script need existence of dir
+	vmkdir "/usr/share/icons"
+	./install.sh -d "$DESTDIR/usr/share/icons" -c all -t ${_colors[@]}
+}
+
+# Generate subpackages based on _colors value, subpackages will be named
+# qogir-icon-theme-<color>
+for e in ${_colors[@]}; do
+
+	case "$e" in
+		manjaro|ubuntu)
+			_themeDir="Qogir-${e^}"
+			_subpkgname="qogir-icon-theme-${e}"
+			;;
+		"default")
+			_themeDir="Qogir"
+			_subpkgname="qogir-icon-theme-standard"
+			;;
+		*)
+			msg_error "Invalid value \"${e}\" in _colors"
+			;;
+	esac
+
+	subpackages+=" ${_subpkgname}"
+	depends+=" ${_subpkgname}"
+	eval "${_subpkgname}_package() {
+		depends=\"gtk-update-icon-cache\"
+		short_desc=\"Qogir flat icon theme - ${e} variant\"
+		triggers=\"gtk-icon-cache\"
+		pkg_install() {
+			vmove \"usr/share/icons/${_themeDir}\"
+			vmove \"usr/share/icons/${_themeDir}-Dark\"
+			vmove \"usr/share/icons/${_themeDir}-Light\"
+		}
+	}"
+done
